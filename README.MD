@@ -40,6 +40,8 @@ This is a socketting excercise written for my Data Communications class. The goa
 
    To run the server, run `./server 3000`. This will run the server on port 3000. When the server is running, open a web browser and navigate to  `127.0.0.1:3000` (or the address of the machine). A simple HTML page should be displayed. If the page is visable, than the server is running propperly. 
 
+   ![Working demo](https://github.com/ClaytonSmith/CPP-HTTP-1.0-Server/blob/master/Screenshots/ServerRunning.png)
+
    The client requires four runtime arguments as opposed to the servers one. The client require a host to connect to, port number, HTTP method (`GET`, `PUT`), and file to retrieve or transmit. If the server is running, try running
    > ./client http://127.0.0.1 3000 GET index.html
 
