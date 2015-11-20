@@ -7,8 +7,8 @@ targets: server	client
 server: server.cpp
 	$(COMP) $(COMP_VERSON) -o server  server.cpp -lPocoNet -lPocoUtil -lPocoFoundation
 
-client: 
-
+client: client.cpp
+	$(COMP) $(COMP_VERSON) -o client  client.cpp -lPocoNet -lPocoUtil -lPocoFoundation
 clean:
 	rm -f *~
 	rm -f *.o

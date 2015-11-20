@@ -51,12 +51,20 @@ public:
     
     ostream& out = resp.send();
     out << "<h1>Hello friend!</h1>"
-        << "<p>Host: "           << req.getHost()   << "</p>"
-        << "<p>Method: "         << req.getMethod() << "</p>"
+        << "<p>Host: "     << req.getHost()   << "</p>"
+        << "<p>Method: "   << req.getMethod() << "</p>"
         << "<p>Filename: " << req.getURI()    << "</p>";
     
     out.flush();
    
+    /** Does not work
+      StreamSocket strs = req.acceptConnection();
+      SocketStream ostr(strs);
+      std::string file("test.in");
+      Poco::FileInputStream istr(file, std::ios::binary);
+      StreamCopier::copyStream(istr, ostr);
+    */
+    
     cout << endl << "URI=" << req.getURI() << endl;  
   }
 };
