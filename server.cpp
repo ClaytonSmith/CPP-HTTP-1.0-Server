@@ -22,7 +22,9 @@ bool is_numeric( char *number_string){
   return (temp_number_string.find_first_not_of( "0123456789" ) == string::npos);
 }
 
-class MyRequestHandler : public HTTPRequestHandler {
+
+
+class MyGetRequestHandler : public HTTPRequestHandler {
 public:
   virtual void handleRequest(HTTPServerRequest &req, HTTPServerResponse &resp){
     resp.setStatus(HTTPResponse::HTTP_OK);
@@ -30,38 +32,60 @@ public:
     
     ostream& out = resp.send();
     out << "<h1>Hello world!</h1>"
-        << "<p>Count: "  << ++count         << "</p>"
         << "<p>Host: "   << req.getHost()   << "</p>"
         << "<p>Method: " << req.getMethod() << "</p>"
         << "<p>URI: "    << req.getURI()    << "</p>";
     out.flush();
     
-    cout << endl
-         << "Response sent for count=" << count
-         << " and URI=" << req.getURI() << endl;
+    cout << endl << "URI=" << req.getURI() << endl;  
   }
-  
-private:
-  static int count;
 };
 
-int MyRequestHandler::count = 0;
+class MyPutRequestHandler : public HTTPRequestHandler {
+public:
+  virtual void handleRequest(HTTPServerRequest &req, HTTPServerResponse &resp){
+    resp.setStatus(HTTPResponse::HTTP_OK);
+    resp.setContentType("text/html");
+    
+    string fileName = req.getURI();
+    
+    ostream& out = resp.send();
+    out << "<h1>Hello friend!</h1>"
+        << "<p>Host: "           << req.getHost()   << "</p>"
+        << "<p>Method: "         << req.getMethod() << "</p>"
+        << "<p>Filename: " << req.getURI()    << "</p>";
+    
+    out.flush();
+   
+    cout << endl << "URI=" << req.getURI() << endl;  
+  }
+};
 
 class MyRequestHandlerFactory : public HTTPRequestHandlerFactory 
 {
 public:
-  virtual HTTPRequestHandler* createRequestHandler(const HTTPServerRequest &)
-  {
-    return new MyRequestHandler;
+  virtual HTTPRequestHandler* createRequestHandler(const HTTPServerRequest &req) {
+    
+    string httpMethod = req.getMethod();
+    
+    if( httpMethod.compare( HTTPRequest::HTTP_GET ) == 0 ){
+      return new MyGetRequestHandler;
+
+    } else if( httpMethod.compare( HTTPRequest::HTTP_PUT ) == 0 ) {     
+      return  new MyPutRequestHandler;
+
+    } else {
+      // Other request type
+
+    }
   }
 };
 
-class MyServerApp : public ServerApplication 
-{
+class MyServerApp : public ServerApplication {
 protected:
   int main(const vector<string> &args){
     
-    HTTPServer s(new MyRequestHandlerFactory, ServerSocket( atoi( args[1].c_str() ) ), new HTTPServerParams);
+    HTTPServer s(new MyRequestHandlerFactory, ServerSocket( atoi( args[1].c_str() ) ), new HTTPServerParams );
     
     s.start();
     cout << endl << "Server started" << endl;
