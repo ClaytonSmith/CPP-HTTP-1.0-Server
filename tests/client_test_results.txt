@@ -1,0 +1,44 @@
+Running client test script\n\n
+*** Running negative tests. All should fail ***
+* Testing argument length *
+No arguments ( four short )
+./client
+Passed
+
+One argument ( three short )
+./client fake_host.com
+Passed
+
+Two arguments ( two short )
+./client fake_host.com bad-port
+Passed
+
+Three arguments ( one short )
+./client fake_host.com bad-port request
+Passed
+
+* Testing port input  *
+Check that only numeric values are accepted
+./client fake_host.com bad-port request index.html
+Passed
+
+Mixed type
+./client fake_host.com bad-123 request index.html
+Passed
+
+* Testing request type *
+This request does not exist
+./client fake_host.com 80 bad_request index.html
+Passed
+
+'1337' is not a real request
+./client fake_host.com 80 1337 index.html
+Passed
+
+Requests method names should be in all caps
+./client fake_host.com 80 put index.html
+Passed
+
+./client fake_host.com 80 get index.html
+Passed
+

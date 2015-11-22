@@ -1,0 +1,28 @@
+Running server test
+*** Running negative tests. All should fail ***
+* Testing argument length *
+No arguments ( four short )
+./server
+Passed
+
+* Testing port input *
+Check that only numeric values are accepted
+./server bad-port
+Passed
+
+Mixed type
+./server bad-123
+Passed
+
+Out of port range ( below )
+./server 123
+Passed
+
+Out of port range ( above )
+./server 123456789
+Passed
+
+Out of port range ( -1 ) 
+./server -1
+Passed
+

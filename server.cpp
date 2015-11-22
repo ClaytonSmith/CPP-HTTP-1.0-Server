@@ -30,14 +30,14 @@ public:
     resp.setStatus(HTTPResponse::HTTP_OK);
     resp.setContentType("text/html");
     
+    // Generate requested HTML file
     ostream& out = resp.send();
-    out << "<h1>Hello world!</h1>"
-        << "<p>Host: "   << req.getHost()   << "</p>"
-        << "<p>Method: " << req.getMethod() << "</p>"
-        << "<p>URI: "    << req.getURI()    << "</p>";
+    out << "<h1>Hello world! This files name is " << req.getURI() << "</h1>"
+        << "<p>Host: "           << req.getHost()   << "</p>"
+        << "<p>Method: "         << req.getMethod() << "</p>";
     out.flush();
     
-    cout << endl << "URI=" << req.getURI() << endl;  
+    cout << endl << "Client requested: =" << req.getURI() << endl;  
   }
 };
 
@@ -110,8 +110,8 @@ protected:
 
 
 void usage(){
-  perror("Usage: ./server <PORT_NUMBER>");
-  perror("Please provide a port in range of 1024 - 49151 for the server to run on. Recommended: 300");
+  cout << "Usage: ./server <PORT_NUMBER>" << endl;
+  cout << "Please provide a port in range of 1024 - 49151 for the server to run on. Recommended: 300" << endl;
   exit(-1);
 }
 

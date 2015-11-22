@@ -33,7 +33,7 @@ int main(int argc, char *argv[]){
   }
   
   // Check if user is asking to make a GET request 
-  if( HTTPRequest::HTTP_GET.compare( argv[3] )){
+  if( HTTPRequest::HTTP_GET.compare( argv[3] ) == 0 ){
     
     try {
 
@@ -43,8 +43,12 @@ int main(int argc, char *argv[]){
     
       
       // File path
-      string path(argv[3]);
-        
+      // string path(argv[3]);
+      string path( string("/") + string( argv[4] ) );//uri.getPathAndQuery());
+      //if (path.empty()) path = "/index.html";
+      //string test("this" + " Thank");
+      cout << path << endl;
+      
       // send request
       HTTPRequest req(HTTPRequest::HTTP_GET, path, HTTPMessage::HTTP_1_0);
       session.sendRequest(req);
@@ -64,11 +68,11 @@ int main(int argc, char *argv[]){
     }
 
     // PUT request 
-  } else if( HTTPRequest::HTTP_PUT.compare( argv[3] )){
+  } else if( HTTPRequest::HTTP_PUT.compare( argv[3] ) == 0){
     try {
       
       // Pass client session host and filename 
-      HTTPClientSession session( argv[1] );
+      HTTPClientSession session( argv[1], atoi( argv[2] ) );
       HTTPRequest request(HTTPRequest::HTTP_PUT, argv[4]);
 
       // send first request
