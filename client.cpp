@@ -72,9 +72,10 @@ int main(int argc, char *argv[]){
     try {
       
       // Pass client session host and filename 
-      HTTPClientSession session( argv[1], atoi( argv[2] ) );
+      URI uri(argv[1]);
+      HTTPClientSession session( uri.getHost(), atoi( argv[2] ) );
       HTTPRequest request(HTTPRequest::HTTP_PUT, argv[4]);
-
+      
       // send first request
       std::ostream& os = session.sendRequest(request);
       
